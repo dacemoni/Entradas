@@ -1,7 +1,7 @@
 # Entradas
 Ejercicio de gestión de la venta de entradas en un teatro.
 
-# Ejercicios realizado por: 
+# Ejercicio realizado por: 
 
 David César Moro Nieto 
 
