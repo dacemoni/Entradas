@@ -1,4 +1,4 @@
-package entradas;
+package Excepciones;
 
 public class ZonaCompletaException extends Exception {
 	

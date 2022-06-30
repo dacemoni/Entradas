@@ -1,10 +1,16 @@
-package entradas;
+package Clases;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+
+import Excepciones.EntradaAlreadyExistsException;
+import Excepciones.EntradaNotFoundException;
+import Excepciones.TipoNotFoundException;
+import Excepciones.ZonaCompletaException;
+import Excepciones.ZonaNotFoundException;
 
 public class GestorEntradasImpl implements GestorEntradas {
 	private List<Entrada> entradasSinDuplicados;
@@ -23,15 +29,15 @@ public class GestorEntradasImpl implements GestorEntradas {
 		if (!zona.equals("Principal") && !zona.equals("Palco") && !zona.equals("Central") && !zona.equals("Lateral")) {
 			throw new ZonaNotFoundException(String.format("La zona %s no existe", zona));
 		}
-		
-		System.out.println("Introduce el nombre: ");
-		String nombreComprador = teclado.next();
 
 		System.out.println("Introduce el tipo de entrada: (normal/reducido/abonado) ");      
 		String tipo = teclado.next();
 		if (!tipo.equals("normal") && !tipo.equals("reducido") && !tipo.equals("abonado")) {
 			throw new TipoNotFoundException(String.format("El tipo de entrada %s no existe", tipo));
 		}
+
+		System.out.println("Introduce el nombre del comprador: ");
+		String nombreComprador = teclado.next();
 
 		if (tipo.equals("normal") && zona.equals("Principal") && nuevoTeatro.nEntradasPrincipal < 200) {
 			id++;
@@ -117,19 +123,19 @@ public class GestorEntradasImpl implements GestorEntradas {
 		else{
 			entradasSinDuplicados.add(entrada);
 		}
-		System.out.println(String.format("La entrada %d vale : %d", entrada.getId(), precio));     
+		System.out.println(String.format("La entrada %d vale: %d €", entrada.getId(), precio));     
 	}
 
 	@Override
 	public void consultaEntrada(Scanner teclado) throws EntradaNotFoundException {
-		System.out.println("Las entradas almacenadas son: ");
+		System.out.println("Las entradas almacenadas que se han vendido son:");
 		Collections.sort(entradasSinDuplicados);
+
 		for (Entrada entrada : entradasSinDuplicados){
 			System.out.println(String.format("%d", entrada.getId()));
 		}
 		System.out.println("Introduce el identificador de la entrada: "); 
 		System.out.println(findEntrada(teclado));
-
 	}
 
 	@Override
@@ -138,37 +144,38 @@ public class GestorEntradasImpl implements GestorEntradas {
 		System.out.println("Introduce la zona de la entrada: (Principal/Palco/Central/Lateral)");
 		String zona = teclado.next();
 
-		if (zona.equals("Principal")) {
+		if (zona.equals("Principal") || zona.equals("principal")) {
 			precio = (nuevoTeatro.nEntradasPrincipalNormal*25) + (nuevoTeatro.nEntradasPrincipalAbonado*20) + (nuevoTeatro.nEntradasPrincipalReducido*21);
-			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d", zona, nuevoTeatro.getnEntradasPrincipal(), precio));
+			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d €, quedan %d entradas en esta zona", zona, nuevoTeatro.getnEntradasPrincipal(), precio, 200 - nuevoTeatro.getnEntradasPrincipal()));
 		}
-		else if (zona.equals("Palco")) {
+		else if (zona.equals("Palco") || zona.equals("palco")) {
 			precio = (nuevoTeatro.nEntradasPalcoNormal*70) + (nuevoTeatro.nEntradasPalcoAbonado*40) + (nuevoTeatro.nEntradasPalcoReducido*60);
-			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d", zona, nuevoTeatro.getnEntradasPalco(), precio));
+			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d €, quedan %d entradas en esta zona", zona, nuevoTeatro.getnEntradasPalco(), precio, 40 - nuevoTeatro.getnEntradasPalco()));
 		}
-		else if (zona.equals("Central")) {
+		else if (zona.equals("Central") || zona.equals("central")) {
 			precio = (nuevoTeatro.nEntradasCentralNormal*20) + (nuevoTeatro.nEntradasCentralAbonado*14) + (nuevoTeatro.nEntradasCentralReducido*17);
-			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d", zona, nuevoTeatro.getnEntradasCentral(), precio));
+			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d €, quedan %d entradas en esta zona", zona, nuevoTeatro.getnEntradasCentral(), precio, 400 - nuevoTeatro.getnEntradasCentral()));
 		}
-		else if (zona.equals("Lateral")) {
+		else if (zona.equals("Lateral") || zona.equals("lateral")) {
 			precio = (nuevoTeatro.nEntradasLateralNormal*15) + (nuevoTeatro.nEntradasLateralAbonado*10) + (nuevoTeatro.nEntradasLateralReducido*13);
-			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d", zona, nuevoTeatro.getnEntradasLateral(), precio));
+			System.out.println(String.format("Las entradas vendidas en la zona %s son %d, por valor de %d €, quedan %d entradas en esta zona", zona, nuevoTeatro.getnEntradasLateral(), precio, 100 - nuevoTeatro.getnEntradasLateral()));
 		}
 		else {
 			throw new ZonaNotFoundException(String.format("La zona %s no existe", zona));
 		}
 	}
 
+
 	/////////////////////////////////////////////	Metodos Privados	//////////////////////////////////////////////////////////////////////////
 
 	private Entrada findEntrada(Scanner teclado) throws EntradaNotFoundException {
 		Optional<Entrada> entradaFound = null;
 		int id = teclado.nextInt();
-	  	long count = entradasSinDuplicados.stream().filter(c -> c.getId() == (id)).count();
-        
-	    if (count == 0){
-	       throw new EntradaNotFoundException(String.format("La entrada con identificador %d no existe", id));
-	    }
+		long count = entradasSinDuplicados.stream().filter(c -> c.getId() == (id)).count();
+
+		if (count == 0){
+			throw new EntradaNotFoundException(String.format("La entrada con identificador %d no existe", id));
+		}
 		entradaFound = entradasSinDuplicados.stream().filter(c -> c.getId() == (id)).findFirst();
 		return entradaFound.get();
 

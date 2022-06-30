@@ -1,4 +1,4 @@
-package entradas;
+package Excepciones;
 
 public class EntradaAlreadyExistsException extends Exception {
 	

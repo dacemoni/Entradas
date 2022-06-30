@@ -1,4 +1,4 @@
-package entradas;
+package Clases;
 
 public class Teatro {
 	
@@ -147,15 +147,7 @@ public class Teatro {
 	@Override
 	public String toString() {
 		return "Teatro [nEntradasPrincipal=" + nEntradasPrincipal + ", nEntradasPalco=" + nEntradasPalco
-				+ ", nEntradasCentral=" + nEntradasCentral + ", nEntradasLateral=" + nEntradasLateral
-				+ ", nEntradasPrincipalNormal=" + nEntradasPrincipalNormal + ", nEntradasPalcoNormal="
-				+ nEntradasPalcoNormal + ", nEntradasCentralNormal=" + nEntradasCentralNormal
-				+ ", nEntradasLateralNormal=" + nEntradasLateralNormal + ", nEntradasPrincipalReducido="
-				+ nEntradasPrincipalReducido + ", nEntradasPalcoReducido=" + nEntradasPalcoReducido
-				+ ", nEntradasCentralReducido=" + nEntradasCentralReducido + ", nEntradasLateralReducido="
-				+ nEntradasLateralReducido + ", nEntradasPrincipalAbonado=" + nEntradasPrincipalAbonado
-				+ ", nEntradasPalcoAbonado=" + nEntradasPalcoAbonado + ", nEntradasCentralAbonado="
-				+ nEntradasCentralAbonado + ", nEntradasLateralAbonado=" + nEntradasLateralAbonado + "]";
+				+ ", nEntradasCentral=" + nEntradasCentral + ", nEntradasLateral=" + nEntradasLateral + "]";
 	}
 
 }

@@ -1,7 +1,15 @@
-package entradas;
+package Main;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import Clases.GestorEntradas;
+import Clases.GestorEntradasImpl;
+import Excepciones.EntradaAlreadyExistsException;
+import Excepciones.EntradaNotFoundException;
+import Excepciones.TipoNotFoundException;
+import Excepciones.ZonaCompletaException;
+import Excepciones.ZonaNotFoundException;
 
 public class AppEntradas{
 	public static void main(String[] args){        
@@ -62,12 +70,10 @@ public class AppEntradas{
 	}
 
 	private static void menu(){
-		System.out.println("");
-		System.out.println("¿Qué quieres hacer?");
+		System.out.println("\n¿Qué quieres hacer?");
 		System.out.println("1. Vender entrada");
-		System.out.println("2. Consulta entrada");
+		System.out.println("2. Consultar entrada");
 		System.out.println("3. Informe zona");
 		System.out.println("4. Terminar y salir");
-		System.out.println("");
 	}
 }

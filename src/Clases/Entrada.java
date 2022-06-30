@@ -1,4 +1,4 @@
-package entradas;
+package Clases;
 
 import java.util.Objects;
 
@@ -61,7 +61,7 @@ public class Entrada implements Comparable<Entrada>{
 
 	@Override
 	public String toString() {
-		return "Entrada [id=" + id + ", zona=" + zona + ", tipo=" + tipo + ", nombreComprador=" + nombreComprador + "]";
+		return "Entrada con id = " + id + ", zona = " + zona + ", tipo = " + tipo + ", nombreComprador = " + nombreComprador;
 	}
 
 	@Override
